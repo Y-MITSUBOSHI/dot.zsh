@@ -17,6 +17,9 @@ bindkey "\\en" history-beginning-search-forward-end
 bindkey "^R" history-incremental-pattern-search-backward
 bindkey "^S" history-incremental-pattern-search-forward
 bindkey '^m' do_enter
+# alt allow
+bindkey "^[^[[D" backward-word
+bindkey "^[^[[C" forward-word
 
 # peco
 which peco > /dev/null 2>&1
