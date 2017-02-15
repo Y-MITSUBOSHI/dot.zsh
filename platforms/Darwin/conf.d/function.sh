@@ -11,3 +11,23 @@ tell application "iTerm"
 end tell
 EOF
 }
+
+# please settings ssh_config. ~/.ssh/config
+# ex) Host hoge.com # develop
+color_change_ssh(){
+  if alias ssh_config_update > /dev/null 2>&1; then
+    ssh_config_update
+  fi
+  # [develop, staging, production]
+  local level="$(echo $@[$#] | sed 's;.*@;;g' | xargs -I{} grep {} ~/.ssh/config | grep -o '#.*' | head -n1)"
+  
+  if echo $level | grep 'develop' > /dev/null 2>&1; then
+    set_term_bgcolor 0 0 100
+  elif echo $level | grep 'staging' > /dev/null 2>&1; then
+    set_term_bgcolor 80 80 0 # yellow
+  else # no settings. [production]
+    set_term_bgcolor 100 0 0 # red
+  fi
+  \ssh $@
+  set_term_bgcolor 0 0 0
+}
