@@ -21,9 +21,9 @@ color_change_ssh(){
   # [develop, staging, production]
   local level="$(echo $@[$#] | sed 's;.*@;;g' | xargs -I{} grep {} ~/.ssh/config | grep -o '#.*' | head -n1)"
   
-  if echo $level | grep 'develop' > /dev/null 2>&1; then
+  if [[ $level =~ 'develop' ]]; then
     set_term_bgcolor 0 0 100
-  elif echo $level | grep 'staging' > /dev/null 2>&1; then
+  elif [[ $level =~ 'staging' ]]; then
     set_term_bgcolor 80 80 0 # yellow
   else # no settings. [production]
     set_term_bgcolor 100 0 0 # red
