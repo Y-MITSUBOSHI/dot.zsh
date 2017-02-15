@@ -30,7 +30,8 @@ alias urldecode="nkf --url-input"
 
 if [ -d ~/.ssh/conf.d ]; then
   # feature "conf.d"
-  alias ssh=": > ~/.ssh/config && echo '# DO NOT EDIT! Please edit conf.d/' >> ~/.ssh/config && find ~/.ssh/conf.d -type f | grep -v '/\.git' | xargs cat >> ~/.ssh/config; ssh"
+  alias ssh_config_update=": > ~/.ssh/config && echo '# DO NOT EDIT! Please edit conf.d/' >> ~/.ssh/config && find ~/.ssh/conf.d -type f | grep -v '/\.git' | xargs cat >> ~/.ssh/config"
+  alias ssh="ssh_config_update; ssh"
 fi
 
 # if [ "${PAGER}" != "less" ]; then
