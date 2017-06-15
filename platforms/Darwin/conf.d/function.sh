@@ -18,15 +18,19 @@ color_change_ssh(){
   if alias ssh_config_update > /dev/null 2>&1; then
     ssh_config_update
   fi
+  if [ $# -eq 0 ] && alias ssh-p > /dev/null 2>&1; then
+    ssh-p
+    return 0
+  fi
   # [develop, staging, production]
   local level="$(echo $@[$#] | sed 's;.*@;;g' | xargs -I{} grep {} ~/.ssh/config | grep -o '#.*' | head -n1)"
   
   if [[ $level =~ 'develop' ]]; then
-    set_term_bgcolor 0 0 100
+    set_term_bgcolor 0 0 60
   elif [[ $level =~ 'staging' ]]; then
-    set_term_bgcolor 80 80 0 # yellow
+    set_term_bgcolor 35 35 0 # yellow
   else # no settings. [production]
-    set_term_bgcolor 100 0 0 # red
+    set_term_bgcolor 60 0 0 # red
   fi
   \ssh $@
   set_term_bgcolor 0 0 0
